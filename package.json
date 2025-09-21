@@ -1,0 +1,48 @@
+{
+  "name": "negus-ethiopic-gregorian",
+  "version": "0.1.1",
+  "description": "Accurate, dependency-free Ethiopic (Ethiopian) ↔ Gregorian date conversions with utilities & highlights.",
+  "license": "MIT",
+  "author": "Negus Nati",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/negusnati/negus-ethiopic-gregorian.git"
+  },
+  "bugs": {
+    "url": "https://github.com/negusnati/negus-ethiopic-gregorian/issues"
+  },
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "sideEffects": false,
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=16"
+  },
+  "scripts": {
+    "build": "tsup src/index.ts --format esm,cjs --dts --clean",
+    "dev": "tsup --watch",
+    "test": "vitest run",
+    "lint": "eslint . --ext .ts",
+    "prepublishOnly": "npm run build && npm run test && npm run lint"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^8.44.0",
+    "@typescript-eslint/parser": "^8.44.0",
+    "eslint": "^9.36.0",
+    "prettier": "^3.6.2",
+    "tsup": "^8.5.0",
+    "typescript": "^5.9.2",
+    "vitest": "^2.1.9"
+  }
+}

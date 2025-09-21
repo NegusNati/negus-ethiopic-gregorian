@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "target": "ES2021",
+    "module": "ES2022",
+    "moduleResolution": "Bundler",
+    "strict": true,
+    "exactOptionalPropertyTypes": true,
+    "noUncheckedIndexedAccess": true,
+    "forceConsistentCasingInFileNames": true,
+    "useDefineForClassFields": true,
+    "resolveJsonModule": false,
+    "declaration": true,
+    "declarationMap": false,
+    "skipLibCheck": true,
+    "outDir": "dist",
+    "lib": ["ES2021"]
+  },
+  "include": ["src", "tests"]
+}
