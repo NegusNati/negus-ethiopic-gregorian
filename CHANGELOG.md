@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - Comprehensive LLM-oriented reference docs (`llm.txt`, `llm.md`) detailing conversion APIs, highlight utilities, and release workflows.
+- Automated release pipeline that verifies tags, publishes to npm and GitHub Packages, and creates GitHub releases from `release-notes/`.
 
 ### Docs
 - Expanded README callout on the highlights subpath and size considerations.

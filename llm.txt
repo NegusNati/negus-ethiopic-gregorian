@@ -122,5 +122,7 @@ Implementation Notes
 Publishing Advice
 -----------------
 - Build script runs tsup (ESM bundles) then esbuild (CJS root bundle).
-- `npm pack --dry-run --json` surfaces final archive size; expect ~41 KB unpacked for v0.2.0.
+- `npm pack --dry-run --json` surfaces final archive size; expect ~41 KB unpacked for v0.2.x.
 - Tests: `vitest run` (note: current Tinypool teardown crash; rerun with limited worker settings if needed).
+- Pushing a tag that matches `v*` triggers `.github/workflows/release.yml` to verify, publish to npm/GitHub Packages, and create a GitHub Release using the matching `release-notes/` entry.
+- Repository secrets required: `NPM_TOKEN` (npm publish permission) and default `GITHUB_TOKEN` handles GitHub Packages/releases.

@@ -153,6 +153,11 @@ const national = all2025.filter(h => h.category === 'national');
 * [`llm.md`](./llm.md) – Structured reference for code-generation tools (APIs, usage patterns, workflows).
 * [`llm.txt`](./llm.txt) – Plain-text variant for prompt injection or lightweight consumption.
 
+## CI/CD
+
+* [`ci.yml`](.github/workflows/ci.yml) runs lint, tests, and build on pushes and pull requests across Node 18 & 20.
+* [`release.yml`](.github/workflows/release.yml) kicks in on `v*` tags: verifies the build, publishes to npm (requires `NPM_TOKEN`) and GitHub Packages, then creates a GitHub Release using the matching `release-notes/` entry.
+
 ## Accuracy & references
 
 * Ethiopic epoch (1 Mäskäräm 1 AM = 29 Aug 8 CE, Julian), `ETH_EPOCH = 1723856`; Amete Alem delta `5500`. Algorithms follow established OSS implementations. ([GitHub][2])

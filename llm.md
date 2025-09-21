@@ -164,7 +164,9 @@ const amharicMatches = searchHighlights('እንቁጣጣሽ');
 ## Build & Release Checklist
 
 - `npm run build` → generates `dist/index.js`, `dist/index.cjs`, `dist/highlights.js`, and declaration files.
-- `npm_config_cache=.tmp-npm-cache npm pack --dry-run --json` → confirms output size (~41.8 kB unpacked for 0.2.0).
+- `npm_config_cache=.tmp-npm-cache npm pack --dry-run --json` → confirms output size (~41.8 kB unpacked for 0.2.x).
 - `vitest run` (or with custom workshop settings) → ensures regression coverage passes.
+- Pushing a tag like `v0.2.1` triggers `.github/workflows/release.yml` which runs the verify matrix, publishes to npm and GitHub Packages, and creates a GitHub Release from the corresponding `release-notes/` entry.
+- Required secrets: set `NPM_TOKEN` (publish access on npm); `GITHUB_TOKEN` is provided automatically for GitHub Packages and release creation.
 
 Armed with this guide, an LLM can generate accurate usage samples, integrate holiday lookups, or extend conversion logic without combing through source files.
