@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { yearProgress, addDays, nextMonth } from '../src';
+import { yearProgress, addDays, nextMonth, lastMonth } from '../src';
 
 describe('Utilities', () => {
   it('Year progress (Gregorian)', () => {
@@ -14,8 +14,24 @@ describe('Utilities', () => {
     expect(d).toEqual({ year: 2026, month: 1, day: 1 });
   });
 
-  it('Ethiopic month roll', () => {
-    const d = nextMonth({ year: 2017, month: 13, day: 5, era: 'AM' }, 'ethiopic');
-    expect(d).toEqual({ year: 2018, month: 1, day: 30, era: 'AM' });
+  it('Ethiopic month roll keeps day when moving Pagume → Meskerem', () => {
+    const start = { year: 2017, month: 13, day: 5, era: 'AM' } as const;
+    const next = nextMonth(start, 'ethiopic');
+    expect(next).toEqual({ year: 2018, month: 1, day: 5, era: 'AM' });
+  });
+
+  it('Pagume days stay stable across month hops (including leap day)', () => {
+    const cases = [
+      { year: 2017, month: 13, day: 1, era: 'AM' as const },
+      { year: 2017, month: 13, day: 4, era: 'AM' as const },
+      { year: 2017, month: 13, day: 5, era: 'AM' as const },
+      { year: 2011, month: 13, day: 6, era: 'AM' as const } // 2011 AM is leap (2011 % 4 === 3)
+    ];
+
+    cases.forEach(start => {
+      const forward = nextMonth(start, 'ethiopic');
+      const back = lastMonth(forward, 'ethiopic');
+      expect(back).toEqual(start);
+    });
   });
 });

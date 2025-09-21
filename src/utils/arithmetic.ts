@@ -39,25 +39,12 @@ export function addMonths<T extends EthiopicDate | GregorianDate>(date: T, month
   const { year, month, day, era } = date as EthiopicDate;
   const amEra = era ?? 'AM';
 
-  // Determine how many year-end (13→1) crossings occur when moving forward
-  let newDay = day;
-  if (months > 0) {
-    const mIdxStart = month - 1; // 0..12
-    const crossings = Math.floor((mIdxStart + months) / 13); // number of wraps 13→1
-    for (let i = 0; i < crossings; i++) {
-      const yAtCross = year + i; // leaving Pagume of this Ethiopic year
-      const leap = isEthiopicLeapYear(yAtCross, amEra);
-      // Pagume d moves +30 days into Meskerem => day += 25 (non-leap) or 24 (leap), capped at 30
-      newDay = Math.min(30, newDay + (leap ? 24 : 25));
-    }
-  }
-
   // Compute target year/month by linearizing months into 13-month years
   const total = (year - 1) * 13 + (month - 1) + months;
   const y2 = Math.floor(total / 13) + 1;
   const m2 = ((total % 13) + 13) % 13 + 1;
   const max = ethiopicDaysInMonth(y2, m2, amEra);
-  const d2 = newDay > max ? max : newDay;
+  const d2 = day > max ? max : day;
   return { year: y2, month: m2, day: d2, era: amEra } as T;
 }
 
