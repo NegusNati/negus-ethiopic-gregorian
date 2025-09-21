@@ -8,22 +8,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
-- Initial release with core Ethiopian ↔ Gregorian date conversion
-- JDN (Julian Day Number) conversion utilities
-- Year progress calculation utilities
-- Date arithmetic helpers (add/subtract days, months, years)
-- Ethiopian and Gregorian holiday highlights
-- English and Amharic locale support
-- Comprehensive test suite
-- TypeScript strict mode configuration
-- CI/CD pipeline with GitHub Actions
+- Nothing yet.
+
+## [0.1.1] - 2025-09-21
+
+### Added
+- Full Ethiopic ↔ Gregorian conversion toolkit, including JDN helpers and strict type definitions.
+- Utilities for date arithmetic (days, months, years) and year progress calculations.
+- Extensive highlight datasets for Ethiopian and Gregorian calendars with bilingual (English/Amharic) labels.
+- Highlight query helpers: today's highlights, search, range filters, and calendar-specific lookups.
+- Tooling and quality gates: strict TypeScript config, Vitest coverage, ESLint linting, and GitHub Actions pipeline.
 
 ### Features
-- Zero-dependency, tree-shakeable ESM/CJS bundles
-- Accurate integer-based algorithms
-- Support for both Amete Mihret (AM) and Amete Alem (AA) eras
-- UTC-based today() function
-- Leap year handling for both calendars
+- Zero-dependency, tree-shakeable ESM/CJS bundles built with `tsup`.
+- Accurate integer-based algorithms supporting both Amete Mihret (AM) and Amete Alem (AA) eras.
+- UTC-based `today()` helper to avoid timezone drift.
+- Reliable leap-year handling across both calendars.
 
 ## [0.1.0] - 2025-01-21
 
@@ -33,4 +33,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Documentation and project structure
 
 [Unreleased]: https://github.com/negusnati/negus-ethiopic-gregorian/compare/v0.1.1...HEAD
-[0.1.1]: https://github.com/negusnati/negus-ethiopic-gregorian/releases/tag/v0.1.1
+[0.1.1]: https://github.com/negusnati/negus-ethiopic-gregorian/compare/v0.1.0...v0.1.1
+[0.1.0]: https://github.com/negusnati/negus-ethiopic-gregorian/releases/tag/v0.1.0
