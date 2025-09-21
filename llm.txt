@@ -1,0 +1,126 @@
+Package: negus-ethiopic-gregorian (v0.2.0)
+
+Overview
+--------
+Calendar conversion toolkit with zero runtime dependencies. Provides precise Ethiopic (AM/AA eras) ↔ Gregorian conversions, Julian Day Number helpers, date arithmetic utilities, and an optional highlights module containing Ethiopian/Gregorian holiday datasets with bilingual labels.
+
+Core Data Types
+---------------
+- Calendar: literal union 'ethiopic' | 'gregorian'.
+- Era: 'AM' (Amete Mihret) or 'AA' (Amete Alem). Defaults to 'AM' across utilities.
+- EthiopicDate: { year: number; month: 1-13; day: 1-30 (Pagume 5/6); era?: Era }.
+- GregorianDate: { year: number; month: 1-12; day: 1-31 }.
+- YearProgress: { daysLeft: number; totalDaysInYear: number; percentCompleted: number }.
+- Highlight (highlight entry): id, name, amharicName, calendar, month, day, optional tags/category.
+
+Main Entry: `negus-ethiopic-gregorian`
+-------------------------------------
+Exports stateless functions that operate on plain objects; no mutation, no Date math beyond UTC snapshots.
+
+Constants
+- ETH_EPOCH = 1723856: Julian Day Number of 1 Mäskäräm 1 AM (August 29, 8 CE Julian).
+- AMETE_MIHRET_DELTA = 5500: Offset between Amete Alem and Amete Mihret eras.
+
+Conversion Helpers (`core/ethiopic`, `core/gregorian`, `core/jdn`)
+- `toGregorian(ed: EthiopicDate): GregorianDate`
+  Converts an Ethiopic date (defaults era to AM) to Gregorian by way of Julian Day Number math. Guards invalid month/day via helper functions.
+- `toEthiopic(gd: GregorianDate): EthiopicDate`
+  Converts Gregorian to Ethiopic. Returned era is always 'AM'.
+- `ethiopicToJdn(year, month, day, era='AM'): number`
+  Maps Ethiopic date to Julian Day Number. Applies era offset automatically.
+- `jdnToEthiopic(jdn: number): EthiopicDate`
+  Inverse of `ethiopicToJdn`, returning { year, month, day } plus computed era 'AM'.
+- `gregorianToJdn(year, month, day): number`
+  Converts Gregorian date to Julian Day Number using Fliegel–van Flandern integer formula.
+- `jdnToGregorian(jdn: number): GregorianDate`
+  Inverse conversion.
+- `weekdayFromJdn(jdn: number): WeekdayIndex`
+  Returns 0-6 (Sunday→Saturday) via simple modulus with positive correction.
+
+Calendar Rules
+- `isEthiopicLeapYear(year: number, era='AM'): boolean`
+  Returns true when (year % 4 === 3) after adjusting for era delta.
+- `ethiopicDaysInMonth(year: number, month: number, era='AM'): number`
+  30 days for months 1-12; month 13 (Pagume) is 5 days (6 on Ethiopic leap years). Throws on invalid month index.
+- `isGregorianLeapYear(year: number): boolean`
+  Standard leap logic (divisible by 4, not by 100 unless by 400).
+- `gregorianDaysInMonth(year: number, month: number): number`
+  Returns month length with leap-year handling; throws on invalid month.
+
+Date Arithmetic (`utils/arithmetic`)
+- `today(calendar: Calendar = 'gregorian'): GregorianDate | EthiopicDate`
+  Reads UTC system date, returns Gregorian or converts to Ethiopic.
+- `addDays(date, days, calendar)`
+  Adds days via JDN to keep cross-calendar correctness.
+- `addMonths(date, months, calendar)`
+  Gregorian: adjusts year/month, clamps days to month length. Ethiopic: linearises 13-month years, clamps Pagume overflow.
+- `addYears(date, years, calendar)`
+  Gregorian: leap-day aware (Feb 29 → Feb 28). Ethiopic: clamps to month length.
+- Shortcut wrappers: `previousDay`, `nextDay`, `lastWeek`, `nextWeek`, `lastMonth`, `nextMonth`, `lastYear`, `nextYear`, `lastCentury`, `nextCentury` (call `addDays`/`addMonths`/`addYears` with ± offsets).
+- `yearProgress(date, calendar): YearProgress`
+  Calculates total days in the current year, days remaining, and percent completed (0-100, rounded to 2 decimals) using JDN boundaries.
+
+Types Re-Exported
+- `Calendar`, `Era`, `EthiopicDate`, `GregorianDate`, `YearProgress`, `WeekdayIndex`.
+- Highlight-related types are re-exported for consumers that need to type-check without importing data.
+
+Highlights Entry: `negus-ethiopic-gregorian/highlights`
+-------------------------------------------------------
+Exports richer data requiring larger bundle size. Designed as ESM-only for v0.2.0.
+
+Datasets
+- `ETHIOPIAN_HIGHLIGHTS`: fixed-date Ethiopic events (Enkutatash, Meskel, etc.) with canonical IDs and bilingual names.
+- `GREGORIAN_HIGHLIGHTS`: fixed-date Gregorian events (New Year, Adwa, nationwide holidays).
+- `DYNAMIC_GREGORIAN_HIGHLIGHTS` (internal) drives movable feasts; public API consumes via helpers.
+
+Utility Functions
+- `getHighlightsForDay(date, calendar)`
+  Dispatches to Gregorian or Ethiopic resolver based on `calendar`.
+- `getHighlightsForGregorianDay(gDate)`
+  Returns fixed Gregorian highlights plus computed movable feasts (Easter, Eid, Mawlid) for that specific date.
+- `getHighlightsForEthiopicDay(eDate)`
+  Returns Ethiopic fixed highlights and any converted Gregorian dynamic events matching the Ethiopic date.
+- `getHighlightsForWeek(startDate, calendar, includeWeekends = true)`
+  Iterates 7 days from start. Optionally skips weekends. Returns `HighlightWithDate` (includes concrete Gregorian Date).
+- `getHighlightsForMonth(year, month, calendar)`
+  Monthly roll-up of fixed and dynamic highlights.
+- `getHighlightsForYear(year, calendar)`
+  Yearly aggregate with deduped canonical IDs.
+- `getHighlightsInRange(startDate, endDate, calendar)`
+  Inclusive range query bridging conversions as needed.
+- `searchHighlights(query)`
+  Case-insensitive search across English and Amharic names plus tags; returns matched highlight objects.
+- `getHighlightsByCategory(category, calendar)`
+  Filters highlights by category for the specified calendar year.
+- `getTodaysHighlights()`
+  Uses UTC `today()` → Gregorian/Ethiopic conversions to return highlight list for the current day.
+- `listAllHighlights(year, calendar)`
+  Returns canonicalised, chronologically sorted highlights for a calendar year with both Gregorian/Ethiopic dates.
+
+Highlight Types
+- `Highlight`: core item shape.
+- `HighlightWithDate`: extends Highlight with `date: Date` (Gregorian timestamp) and resolved dual-calendar mappings.
+- `ResolvedHighlight`: enriched structure produced by `listAllHighlights`.
+- `HighlightCategory`: union of known categories (e.g., 'national', 'religious', 'observance').
+
+Usage Patterns
+--------------
+- Convert between calendars: call `toGregorian` / `toEthiopic`, persist plain objects.
+- Validate date lengths: use `ethiopicDaysInMonth`/`gregorianDaysInMonth` before constructing dates manually.
+- Date math: prefer `addDays`/`addMonths`/`addYears` to native Date to stay calendar-correct.
+- Year metrics: `yearProgress` informs progress bars or countdowns.
+- Highlights: import from `/highlights` entry when holiday data or search helpers are needed; otherwise avoid to keep bundle size minimal.
+
+Implementation Notes
+--------------------
+- All arithmetic is integer-based to avoid floating point drift.
+- Ethiopic conversions normalise to 'AM'; when passing 'AA', functions adjust via `AMETE_MIHRET_DELTA`.
+- The library is side-effect free; utilities do not mutate inputs.
+- Timezone-sensitive functions rely on UTC components only.
+- Highlights module deduplicates overlapping Ethiopic/Gregorian IDs via canonical mapping.
+
+Publishing Advice
+-----------------
+- Build script runs tsup (ESM bundles) then esbuild (CJS root bundle).
+- `npm pack --dry-run --json` surfaces final archive size; expect ~41 KB unpacked for v0.2.0.
+- Tests: `vitest run` (note: current Tinypool teardown crash; rerun with limited worker settings if needed).

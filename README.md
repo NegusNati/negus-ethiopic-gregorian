@@ -148,6 +148,11 @@ const national = all2025.filter(h => h.category === 'national');
 * Core converter bundle ships as both ESM + CJS; highlight utilities live in an optional ESM entry to keep the default install lean.
 * Uses UTC-only date reads to avoid timezone pitfalls.
 
+## LLM & automation guides
+
+* [`llm.md`](./llm.md) – Structured reference for code-generation tools (APIs, usage patterns, workflows).
+* [`llm.txt`](./llm.txt) – Plain-text variant for prompt injection or lightweight consumption.
+
 ## Accuracy & references
 
 * Ethiopic epoch (1 Mäskäräm 1 AM = 29 Aug 8 CE, Julian), `ETH_EPOCH = 1723856`; Amete Alem delta `5500`. Algorithms follow established OSS implementations. ([GitHub][2])
