@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { getHighlightsForWeek } from '../src';
+import { getHighlightsForWeek } from '../src/highlights';
 
 describe('getHighlightsForWeek includeWeekends', () => {
   it('excludes Saturday/Sunday when includeWeekends=false', () => {
@@ -10,4 +10,3 @@ describe('getHighlightsForWeek includeWeekends', () => {
     }
   });
 });
-

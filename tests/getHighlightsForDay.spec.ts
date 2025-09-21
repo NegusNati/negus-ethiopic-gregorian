@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { getHighlightsForDay } from '../src';
+import { getHighlightsForDay } from '../src/highlights';
 
 describe('getHighlightsForDay dispatch', () => {
   it('returns Gregorian highlights for a Gregorian date', () => {
@@ -12,4 +12,3 @@ describe('getHighlightsForDay dispatch', () => {
     expect(e.some(h => h.id === 'enkutatash')).toBe(true);
   });
 });
-

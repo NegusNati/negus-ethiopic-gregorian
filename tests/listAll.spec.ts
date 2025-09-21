@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import { listAllHighlights, gregorianToJdn } from '../src';
+import { gregorianToJdn } from '../src';
+import { listAllHighlights } from '../src/highlights';
 
 describe('listAllHighlights', () => {
   it('dedupes canonical ids (genna, meskel) for Gregorian 2025', () => {
@@ -25,4 +26,3 @@ describe('listAllHighlights', () => {
     }
   });
 });
-

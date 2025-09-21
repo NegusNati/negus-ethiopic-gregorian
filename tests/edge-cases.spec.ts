@@ -1,9 +1,11 @@
 import { describe, it, expect } from 'vitest';
 import {
   toGregorian, toEthiopic, today, yearProgress,
-  getHighlightsForDay, searchHighlights, listAllHighlights,
   addDays, addMonths, addYears
 } from '../src';
+import {
+  getHighlightsForDay, searchHighlights, listAllHighlights
+} from '../src/highlights';
 
 describe('Edge Cases & Real-World Scenarios', () => {
   // Test epoch boundaries

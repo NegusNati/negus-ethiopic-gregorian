@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import { ETHIOPIAN_HIGHLIGHTS, GREGORIAN_HIGHLIGHTS, isGregorianLeapYear } from '../src';
+import { isGregorianLeapYear } from '../src';
+import { ETHIOPIAN_HIGHLIGHTS, GREGORIAN_HIGHLIGHTS } from '../src/highlights';
 
 describe('Highlights', () => {
   it('Contains Enkutatash + Meskel', () => {

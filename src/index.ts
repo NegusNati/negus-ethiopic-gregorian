@@ -32,23 +32,10 @@ export {
   yearProgress
 } from './utils/arithmetic';
 
-// Highlights (with utility functions for easy access)
-export {
-  ETHIOPIAN_HIGHLIGHTS,
-  GREGORIAN_HIGHLIGHTS,
-  getHighlightsForDay,
-  getHighlightsForGregorianDay,
-  getHighlightsForEthiopicDay,
-  getHighlightsForWeek,
-  getHighlightsForMonth,
-  getHighlightsForYear,
-  getHighlightsInRange,
-  searchHighlights,
-  getHighlightsByCategory,
-  getTodaysHighlights,
-  listAllHighlights,
-  type Highlight,
-  type HighlightWithDate,
-  type ResolvedHighlight,
-  type HighlightCategory
+// Highlight types stay exported here for convenience; data & utilities live in the optional './highlights' entry
+export type {
+  Highlight,
+  HighlightWithDate,
+  ResolvedHighlight,
+  HighlightCategory
 } from './highlights';

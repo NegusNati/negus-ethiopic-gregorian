@@ -5,7 +5,7 @@ import {
   getHighlightsForMonth,
   getHighlightsForYear,
   searchHighlights
-} from '../src';
+} from '../src/highlights';
 
 describe('Highlight Utilities', () => {
   it('should get highlights for specific Ethiopic day', () => {

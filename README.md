@@ -16,10 +16,14 @@ npm i negus-ethiopic-gregorian
 ```ts
 import {
   toGregorian, toEthiopic, today,
-  yearProgress, nextWeek,
+  yearProgress, nextWeek
+} from 'negus-ethiopic-gregorian';
+import {
   ETHIOPIAN_HIGHLIGHTS, GREGORIAN_HIGHLIGHTS,
   getHighlightsForDay, getTodaysHighlights, searchHighlights
-} from 'negus-ethiopic-gregorian';
+} from 'negus-ethiopic-gregorian/highlights';
+
+// Highlight helpers live in a separate entry so the core converter stays tiny (<1 KB minified).
 
 // Convert EC → GC
 const g = toGregorian({ year: 2017, month: 1, day: 1 }); // => { year: 2024, month: 9, day: 11 }
@@ -57,16 +61,7 @@ console.log(searchResults.length); // 2 (both Ethiopian and Gregorian New Year)
 * `today(calendar?: 'ethiopic'|'gregorian')`
 * `addDays|addMonths|addYears`, `previousDay|nextDay`, `lastWeek|nextWeek|lastMonth|nextMonth|lastYear|nextYear|lastCentury|nextCentury`
 * `yearProgress(date, calendar): { daysLeft, totalDaysInYear, percentCompleted }`
-* `ETHIOPIAN_HIGHLIGHTS`, `GREGORIAN_HIGHLIGHTS` (arrays of `{ id, name, amharicName, calendar, month, day }`)
-* `getHighlightsForDay(date, calendar)` - Get highlights for a specific day
-* `getHighlightsForGregorianDay(date)` - Get highlights for a Gregorian date
-* `getHighlightsForEthiopicDay(date)` - Get highlights for an Ethiopic date
-* `getHighlightsForWeek(startDate, calendar)` - Get highlights for a week
-* `getHighlightsForMonth(year, month, calendar)` - Get highlights for a month
-* `getHighlightsForYear(year, calendar)` - Get highlights for a year
-* `getHighlightsInRange(startDate, endDate, calendar)` - Get highlights in a date range
-* `searchHighlights(query)` - Search highlights by name (English or Amharic)
-* `getTodaysHighlights()` - Get today's highlights
+* `negus-ethiopic-gregorian/highlights` exports `ETHIOPIAN_HIGHLIGHTS`, `GREGORIAN_HIGHLIGHTS`, `getHighlightsForDay(...)`, `getHighlightsForGregorianDay(...)`, `getHighlightsForEthiopicDay(...)`, `getHighlightsForWeek(...)`, `getHighlightsForMonth(...)`, `getHighlightsForYear(...)`, `getHighlightsInRange(...)`, `searchHighlights(...)`, `getTodaysHighlights()`, `listAllHighlights(...)`
 
 ## Highlights & Holidays
 
@@ -100,6 +95,13 @@ Notes:
 ### Highlight Utilities
 
 ```ts
+import {
+  getTodaysHighlights,
+  getHighlightsForEthiopicDay,
+  searchHighlights,
+  getHighlightsForMonth
+} from 'negus-ethiopic-gregorian/highlights';
+
 // Get today's highlights
 const todayHighlights = getTodaysHighlights();
 
@@ -121,7 +123,7 @@ const janHighlights = getHighlightsForMonth(2017, 1, 'ethiopic');
 You can filter by tags such as `public-holiday`, `christian`, `muslim`, or `national` using `listAllHighlights` and a simple predicate.
 
 ```ts
-import { listAllHighlights } from 'negus-ethiopic-gregorian';
+import { listAllHighlights } from 'negus-ethiopic-gregorian/highlights';
 
 // All Ethiopian public holidays in Ethiopic year 2017
 const all2017 = listAllHighlights(2017, 'ethiopic');
@@ -143,7 +145,7 @@ const national = all2025.filter(h => h.category === 'national');
 ## Size & performance
 
 * No runtime dependencies. Pure integer math for conversions.
-* ESM + CJS, `sideEffects:false` for optimal tree-shaking.
+* Core converter bundle ships as both ESM + CJS; highlight utilities live in an optional ESM entry to keep the default install lean.
 * Uses UTC-only date reads to avoid timezone pitfalls.
 
 ## Accuracy & references

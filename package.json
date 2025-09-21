@@ -1,6 +1,6 @@
 {
   "name": "negus-ethiopic-gregorian",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "Accurate, dependency-free Ethiopic (Ethiopian) ↔ Gregorian date conversions with utilities & highlights.",
   "license": "MIT",
   "author": "Negus Nati",
@@ -17,6 +17,15 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
+    },
+    "./highlights": {
+      "types": "./dist/highlights.d.ts",
+      "import": "./dist/highlights.js"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "highlights": ["dist/highlights.d.ts"]
     }
   },
   "main": "./dist/index.cjs",
@@ -30,7 +39,7 @@
     "node": ">=16"
   },
   "scripts": {
-    "build": "tsup src/index.ts --format esm,cjs --dts --clean",
+    "build": "tsup --clean && npx esbuild src/index.ts --bundle --format=cjs --target=es2021 --minify --platform=node --outfile=dist/index.cjs",
     "dev": "tsup --watch",
     "test": "vitest run",
     "lint": "eslint . --ext .ts",

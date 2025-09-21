@@ -10,6 +10,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Nothing yet.
 
+## [0.2.0] - 2025-09-22
+
+### Changed
+- Split highlight utilities into the `negus-ethiopic-gregorian/highlights` entry to keep the core converter bundle under 1 KB minified.
+- Documented the new import path in README along with context on bundle size improvements.
+
+### Removed
+- CJS build for the highlight utilities; the subpath is now ESM-only to avoid duplicated bundles.
+
+### Docs
+- Updated release notes to reflect the refined packaging and highlight entry.
+
 ## [0.1.2] - 2025-09-21
 
 ### Fixed
@@ -40,7 +52,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Basic test coverage
 - Documentation and project structure
 
-[Unreleased]: https://github.com/negusnati/negus-ethiopic-gregorian/compare/v0.1.2...HEAD
+[Unreleased]: https://github.com/negusnati/negus-ethiopic-gregorian/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/negusnati/negus-ethiopic-gregorian/compare/v0.1.2...v0.2.0
 [0.1.2]: https://github.com/negusnati/negus-ethiopic-gregorian/compare/v0.1.1...v0.1.2
 [0.1.1]: https://github.com/negusnati/negus-ethiopic-gregorian/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/negusnati/negus-ethiopic-gregorian/releases/tag/v0.1.0
