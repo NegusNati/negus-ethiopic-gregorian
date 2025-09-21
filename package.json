@@ -1,6 +1,6 @@
 {
   "name": "negus-ethiopic-gregorian",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Accurate, dependency-free Ethiopic (Ethiopian) ↔ Gregorian date conversions with utilities & highlights.",
   "license": "MIT",
   "author": "Negus Nati",

@@ -1,6 +1,6 @@
 import type { Calendar, EthiopicDate, GregorianDate, YearProgress } from '../types';
 import { gregorianDaysInMonth } from '../core/gregorian';
-import { ethiopicDaysInMonth, ethiopicToJdn, jdnToEthiopic, toEthiopic, isEthiopicLeapYear } from '../core/ethiopic';
+import { ethiopicDaysInMonth, ethiopicToJdn, jdnToEthiopic, toEthiopic } from '../core/ethiopic';
 import { gregorianToJdn, jdnToGregorian } from '../core/jdn';
 import { isGregorianLeapYear } from '../core/gregorian';
 
@@ -35,7 +35,7 @@ export function addMonths<T extends EthiopicDate | GregorianDate>(date: T, month
     const d2 = clamp(day, 1, gregorianDaysInMonth(y2, m2));
     return { year: y2, month: m2, day: d2 } as T;
   }
-  // Ethiopic calendar: constant-time month math with special handling for Pagume→Meskerem
+  // Ethiopic calendar: treat months as 13-per-year and clamp overflow (Pagume days into Meskerem)
   const { year, month, day, era } = date as EthiopicDate;
   const amEra = era ?? 'AM';
 
