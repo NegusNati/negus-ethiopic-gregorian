@@ -75,6 +75,12 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ env.NPM_TOKEN }}
 
+      - name: Setup Node.js for GitHub Packages
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: https://npm.pkg.github.com/
+
       - name: Publish to GitHub Packages
         run: |
           npm pkg set name="@${{ github.repository_owner }}/negus-ethiopic-gregorian"
