@@ -88,6 +88,8 @@ The package includes comprehensive support for Ethiopian and Gregorian holidays 
 | eid_al_adha       | Eid al‑Adha                           | ኢድ አል‑አድሐ                             | Dynamic    | 10 Dhu al‑Hijjah (tabular) | religious  | muslim, islamic, public-holiday   |
 | mawlid            | Mawlid (Prophet’s Birthday)          | መውሊድ                                   | Dynamic    | 12 Rabi’ al‑awwal (tabular)| religious  | muslim, islamic, public-holiday   |
 
+|| ethiopian_flag_day| Ethiopian National Flag Day           | የኢትዮጵያ ብሔራዊ ሰንደቅ ዓላማ ቀን        | Dynamic    | 1st Monday of Tikimt       | national   | ethiopia, flag, national-day      |
+
 Notes:
 - “Canonical Date” shows the defining calendar. Ethiopic entries convert to their Gregorian counterpart automatically (e.g., Meskerem 17 ≈ Sep 27; sometimes Sep 28). Islamic dates use the civil/tabular Hijri calendar; observed dates can shift by ±1 day.
 - The full lists are available in `src/highlights/ethiopian.ts` and `src/highlights/gregorian.ts`, and movable feasts in `src/highlights/rules.ts`.
