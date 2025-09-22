@@ -172,7 +172,7 @@ export const DYNAMIC_GREGORIAN_HIGHLIGHTS: DynamicGregorianRule[] = [
       try {
         const flagDay = ethiopianFlagDayGregorian(gy);
         return [{ month: flagDay.month, day: flagDay.day }];
-      } catch (error) {
+      } catch {
         // If calculation fails, return empty array (no occurrence this year)
         return [];
       }
