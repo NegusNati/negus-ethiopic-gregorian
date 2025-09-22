@@ -10,6 +10,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Nothing yet.
 
+## [0.2.2] - 2025-09-22
+
+### Added
+- Ethiopian National Flag Day - dynamic highlight that calculates the first Monday of Tikimt (Ethiopian month) each year
+- Updated "International Labour Day" to "International Labor Day" (standardized American spelling)
+
+### Improved  
+- Enhanced dynamic highlight calculation system with robust year overlap handling for Ethiopian calendar-based holidays
+
 ## [0.2.1] - 2025-09-22
 
 ### Added
@@ -62,7 +71,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Basic test coverage
 - Documentation and project structure
 
-[Unreleased]: https://github.com/negusnati/negus-ethiopic-gregorian/compare/v0.2.1...HEAD
+[Unreleased]: https://github.com/negusnati/negus-ethiopic-gregorian/compare/v0.2.2...HEAD
+[0.2.2]: https://github.com/negusnati/negus-ethiopic-gregorian/compare/v0.2.1...v0.2.2
 [0.2.1]: https://github.com/negusnati/negus-ethiopic-gregorian/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/negusnati/negus-ethiopic-gregorian/compare/v0.1.2...v0.2.0
 [0.1.2]: https://github.com/negusnati/negus-ethiopic-gregorian/compare/v0.1.1...v0.1.2

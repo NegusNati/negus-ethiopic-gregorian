@@ -1,5 +1,6 @@
 import type { GregorianDate } from '../types';
-import { gregorianToJdn, jdnToGregorian } from '../core/jdn';
+import { gregorianToJdn, jdnToGregorian, weekdayFromJdn } from '../core/jdn';
+import { toGregorian } from '../core/ethiopic';
 
 // Dynamic holiday rule interface (Gregorian-based for computation)
 export interface DynamicGregorianRule {
@@ -42,6 +43,37 @@ export function goodFridayGregorian(year: number): GregorianDate {
   const easter = orthodoxEasterGregorian(year);
   const j = gregorianToJdn(easter.year, easter.month, easter.day);
   return jdnToGregorian(j - 2);
+}
+
+// Ethiopian National Flag Day - First Monday of Tikimt
+export function ethiopianFlagDayGregorian(year: number): GregorianDate {
+  // Tikimt (month 2) typically starts around October 11 in the Gregorian calendar
+  // The Ethiopian year is about 7-8 years behind the Gregorian year
+  // For a given Gregorian year, we need to find the Ethiopian year where Tikimt falls
+  
+  const candidateEthiopianYears = [year - 8, year - 7, year - 6]; // Cast a wider net for safety
+  
+  for (const ethiopianYear of candidateEthiopianYears) {
+    // Start of Tikimt (month 2, day 1) in Ethiopian calendar
+    const tikimtStart = { year: ethiopianYear, month: 2, day: 1, era: 'AM' as const };
+    
+    // Convert to Gregorian
+    const tikimtStartGregorian = toGregorian(tikimtStart);
+    
+    // Check if this Tikimt start falls in the requested Gregorian year
+    if (tikimtStartGregorian.year === year) {
+      const tikimtStartJdn = gregorianToJdn(tikimtStartGregorian.year, tikimtStartGregorian.month, tikimtStartGregorian.day);
+      const startWeekday = weekdayFromJdn(tikimtStartJdn); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
+      
+      // Calculate days to add to get to the first Monday
+      const daysToFirstMonday = startWeekday === 1 ? 0 : (1 - startWeekday + 7) % 7;
+      const firstMondayJdn = tikimtStartJdn + daysToFirstMonday;
+      return jdnToGregorian(firstMondayJdn);
+    }
+  }
+  
+  // If no match found, return null - this allows the occurrence function to return empty array
+  throw new Error(`Could not calculate Ethiopian Flag Day for Gregorian year ${year}`);
 }
 export function hosannaGregorian(year: number): GregorianDate {
   const easter = orthodoxEasterGregorian(year);
@@ -130,5 +162,20 @@ export const DYNAMIC_GREGORIAN_HIGHLIGHTS: DynamicGregorianRule[] = [
     amharicName: 'መውሊድ',
     category: 'religious', tags: ['muslim', 'islamic', 'public-holiday'],
     occurrences: (gy) => islamicOccurrencesInGregorianYear(gy, 3, 12) // 12 Rabi' al-awwal
+  },
+  {
+    id: 'ethiopian_flag_day',
+    name: 'Ethiopian National Flag Day',
+    amharicName: 'የኢትዮጵያ ብሔራዊ ሰንደቅ ዓላማ ቀን',
+    category: 'national', tags: ['ethiopia', 'flag', 'national-day'],
+    occurrences: (gy) => {
+      try {
+        const flagDay = ethiopianFlagDayGregorian(gy);
+        return [{ month: flagDay.month, day: flagDay.day }];
+      } catch (error) {
+        // If calculation fails, return empty array (no occurrence this year)
+        return [];
+      }
+    }
   }
 ];
