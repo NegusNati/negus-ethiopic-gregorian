@@ -10,6 +10,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Nothing yet.
 
+## [0.2.4] - 2025-10-06
+
+### Added
+- Irreechaa (Hora Finfinne & Hora Harsede) as dynamic highlights that track the first Saturday/Sunday in October for Gregorian views and convert to Meskerem 24-25 in the Ethiopic calendar.
+- Oromo-language search coverage for Irreechaa via highlight utilities.
+
+### Updated
+- Highlight utilities documentation and tests to reflect the new festival entries.
+- Release collateral (README, release notes) with cultural context for Irreechaa and updated usage guidance.
+
 ## [0.2.3] - 2025-09-22
 
 ### Docs
@@ -77,7 +87,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Basic test coverage
 - Documentation and project structure
 
-[Unreleased]: https://github.com/negusnati/negus-ethiopic-gregorian/compare/v0.2.3...HEAD
+[Unreleased]: https://github.com/negusnati/negus-ethiopic-gregorian/compare/v0.2.4...HEAD
+[0.2.4]: https://github.com/negusnati/negus-ethiopic-gregorian/compare/v0.2.3...v0.2.4
 [0.2.3]: https://github.com/negusnati/negus-ethiopic-gregorian/compare/v0.2.2...v0.2.3
 [0.2.2]: https://github.com/negusnati/negus-ethiopic-gregorian/compare/v0.2.1...v0.2.2
 [0.2.1]: https://github.com/negusnati/negus-ethiopic-gregorian/compare/v0.2.0...v0.2.1
