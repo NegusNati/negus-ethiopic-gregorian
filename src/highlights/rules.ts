@@ -45,6 +45,13 @@ export function goodFridayGregorian(year: number): GregorianDate {
   return jdnToGregorian(j - 2);
 }
 
+function firstWeekdayOfGregorianMonth(year: number, month: number, weekday: number): GregorianDate {
+  const startJdn = gregorianToJdn(year, month, 1);
+  const startWeekday = weekdayFromJdn(startJdn);
+  const offset = (weekday - startWeekday + 7) % 7;
+  return jdnToGregorian(startJdn + offset);
+}
+
 // Ethiopian National Flag Day - First Monday of Tikimt
 export function ethiopianFlagDayGregorian(year: number): GregorianDate {
   // Tikimt (month 2) typically starts around October 11 in the Gregorian calendar
@@ -162,6 +169,28 @@ export const DYNAMIC_GREGORIAN_HIGHLIGHTS: DynamicGregorianRule[] = [
     amharicName: 'መውሊድ',
     category: 'religious', tags: ['muslim', 'islamic', 'public-holiday'],
     occurrences: (gy) => islamicOccurrencesInGregorianYear(gy, 3, 12) // 12 Rabi' al-awwal
+  },
+  {
+    id: 'irreechaa_finfinne',
+    name: 'Irreechaa at Hora Finfinne',
+    amharicName: 'ኢርሪቻ (ሆራ ፊንፊኔ)',
+    category: 'observance', tags: ['ethiopia', 'oromo', 'culture', 'thanksgiving'],
+    occurrences: (gy) => {
+      const firstSaturday = firstWeekdayOfGregorianMonth(gy, 10, 6);
+      return [{ month: firstSaturday.month, day: firstSaturday.day }];
+    }
+  },
+  {
+    id: 'irreechaa_bishoftu',
+    name: 'Irreechaa at Hora Harsede',
+    amharicName: 'ኢርሪቻ (ሆራ ሐርሴዴ)',
+    category: 'observance', tags: ['ethiopia', 'oromo', 'culture', 'thanksgiving'],
+    occurrences: (gy) => {
+      const firstSaturday = firstWeekdayOfGregorianMonth(gy, 10, 6);
+      const saturdayJdn = gregorianToJdn(gy, firstSaturday.month, firstSaturday.day);
+      const sunday = jdnToGregorian(saturdayJdn + 1);
+      return [{ month: sunday.month, day: sunday.day }];
+    }
   },
   {
     id: 'ethiopian_flag_day',
